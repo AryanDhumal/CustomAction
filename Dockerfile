@@ -1,12 +1,10 @@
 # Step 1: Build using Gradle
-FROM gradle:8.5-jdk17 AS build
+FROM gradle:8.7-jdk17 AS build
 
 WORKDIR /app
 COPY . .
 
-# 🔥 IMPORTANT: go into correct folder
 WORKDIR /app/CustomActionMain
-
 RUN gradle build -x test
 
 # Step 2: Run the app
