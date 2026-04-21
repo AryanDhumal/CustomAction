@@ -22,7 +22,7 @@ public class CAController {
                "<p>Your plan is <b>" + plan + "</b></p>";
     }
 
-   @PostMapping("/personalize")
+ @PostMapping("/personalize")
 public Map<String, Object> personalize(@RequestBody Map<String, Object> request) {
 
     Map<String, Object> response = new HashMap<>();
@@ -31,7 +31,7 @@ public Map<String, Object> personalize(@RequestBody Map<String, Object> request)
         Map<String, Object> data = (Map<String, Object>) request.get("data");
 
         if (data == null) {
-            throw new RuntimeException("Missing data object");
+            throw new RuntimeException("Missing data");
         }
 
         String name = data.get("name") != null ? data.get("name").toString() : "Valued Customer";
@@ -65,7 +65,8 @@ public Map<String, Object> personalize(@RequestBody Map<String, Object> request)
         response.put("cityMessage", cityMsg);
 
     } catch (Exception e) {
-        // 🔥 fallback (never break AJO)
+
+        // 🔥 THIS IS YOUR FALLBACK
         response.put("name", "Valued Customer");
         response.put("offer", "Standard Benefits");
         response.put("cityMessage", "Check out our latest offers!");
