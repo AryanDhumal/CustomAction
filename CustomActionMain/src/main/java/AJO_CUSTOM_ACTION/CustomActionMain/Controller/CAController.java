@@ -22,25 +22,24 @@ public class CAController {
                "<p>Your plan is <b>" + plan + "</b></p>";
     }
 
- @PostMapping("/personalize")
+@PostMapping("/personalize")
 public Map<String, Object> personalize(@RequestBody Map<String, Object> request) {
 
     Map<String, Object> response = new HashMap<>();
 
     try {
-        Map<String, Object> data = (Map<String, Object>) request.get("data");
-
-        if (data == null) {
-            throw new RuntimeException("Missing data");
-        }
-
-        String name = data.get("name") != null ? data.get("name").toString() : "Valued Customer";
-        String plan = data.get("plan") != null ? data.get("plan").toString() : "";
-        String city = data.get("city") != null ? data.get("city").toString() : "";
+        // 🔥 NO "data" anymore
+        String name = request.get("name") != null ? request.get("name").toString() : "Valued Customer";
+        String plan = request.get("plan") != null ? request.get("plan").toString() : "";
+        String city = request.get("city") != null ? request.get("city").toString() : "";
 
         int age = 0;
-        if (data.get("age") instanceof Number) {
-            age = ((Number) data.get("age")).intValue();
+        Object ageObj = request.get("age");
+
+        if (ageObj instanceof Number) {
+            age = ((Number) ageObj).intValue();
+        } else if (ageObj instanceof String) {
+            age = Integer.parseInt((String) ageObj);
         }
 
         String offer = "Standard Benefits";
@@ -66,7 +65,7 @@ public Map<String, Object> personalize(@RequestBody Map<String, Object> request)
 
     } catch (Exception e) {
 
-        // 🔥 THIS IS YOUR FALLBACK
+        // 🔥 fallback
         response.put("name", "Valued Customer");
         response.put("offer", "Standard Benefits");
         response.put("cityMessage", "Check out our latest offers!");
