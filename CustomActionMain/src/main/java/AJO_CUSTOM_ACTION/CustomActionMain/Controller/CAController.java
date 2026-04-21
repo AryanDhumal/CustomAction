@@ -1,17 +1,16 @@
 package AJO_CUSTOM_ACTION.CustomActionMain.Controller;
 
-
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/GlobalHit")
-
-
 public class CAController {
+
     @GetMapping
-    public String getResponse(){
+    public String getResponse() {
         return "I am Working Baby ... !";
     }
 
@@ -20,18 +19,20 @@ public class CAController {
                               @RequestParam String plan) {
 
         return "<h1>Hello " + name + "</h1>" +
-                "<p>Your plan is <b>" + plan + "</b></p>";
+               "<p>Your plan is <b>" + plan + "</b></p>";
     }
 
     @PostMapping("/personalize")
-    public String personalize(@RequestBody Map<String, Object> request) {
+    public Map<String, Object> personalize(@RequestBody Map<String, Object> request) {
 
         Map<String, Object> data = (Map<String, Object>) request.get("data");
 
         String name = (String) data.get("name");
         String plan = (String) data.get("plan");
         String city = (String) data.get("city");
-        int age = (int) data.get("age");
+
+        // safer cast for numbers
+        int age = ((Number) data.get("age")).intValue();
 
         String offer = "Standard Benefits";
 
@@ -48,9 +49,12 @@ public class CAController {
             cityMsg = "Special Pune Offer 💥";
         }
 
-        return "<h2>Hello " + name + "</h2>"
-                + "<p>Offer: <b>" + offer + "</b></p>"
-                + "<p>" + cityMsg + "</p>";
-    }
+        // ✅ return JSON instead of HTML
+        Map<String, Object> response = new HashMap<>();
+        response.put("name", name);
+        response.put("offer", offer);
+        response.put("cityMessage", cityMsg);
 
+        return response;
+    }
 }
