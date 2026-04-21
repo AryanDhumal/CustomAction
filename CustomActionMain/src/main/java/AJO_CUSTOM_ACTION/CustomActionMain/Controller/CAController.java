@@ -48,6 +48,9 @@ public class CAController {
         if ("Pune".equalsIgnoreCase(city)) {
             cityMsg = "Special Pune Offer 💥";
         }
+        else{
+            cityMsg="Special Offer for our valued customer";
+        }
 
         // ✅ return JSON instead of HTML
         Map<String, Object> response = new HashMap<>();
