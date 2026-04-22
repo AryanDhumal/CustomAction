@@ -28,7 +28,7 @@ public Map<String, Object> personalize(@RequestBody Map<String, Object> request)
     Map<String, Object> response = new HashMap<>();
 
     try {
-        // 🔥 NO "data" anymore
+        // NO "data" anymore
         String name = request.get("name") != null ? request.get("name").toString() : "Valued Customer";
         String plan = request.get("plan") != null ? request.get("plan").toString() : "";
         String city = request.get("city") != null ? request.get("city").toString() : "";
@@ -65,7 +65,7 @@ public Map<String, Object> personalize(@RequestBody Map<String, Object> request)
 
     } catch (Exception e) {
 
-        // 🔥 fallback
+        // fallback
         response.put("name", "Valued Customer");
         response.put("offer", "Standard Benefits");
         response.put("cityMessage", "Check out our latest offers!");
